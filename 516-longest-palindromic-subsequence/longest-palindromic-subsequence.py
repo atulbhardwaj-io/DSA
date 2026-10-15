@@ -1,32 +1,30 @@
+
 class Solution(object):
     def longestPalindromeSubseq(self, s):
-        """
-        :type s: str
-        :rtype: int
-        """
-        text1 = s
-        text2 = s[::-1]
+        l = len(s)
+        first = 0
+        last = l - 1
 
-        m = len(text1)
-        n = len(text2)
+        t = [[-1] * l for _ in range(l)]
 
-        t = [[-1] * (n + 1) for _ in range(m + 1)]
-
-        def LCS(m, n):
-            if m == 0 or n == 0:
+        def lps(first, last):
+            if first > last:
                 return 0
 
-            if t[m][n] != -1:
-                return t[m][n]
+            if first == last:
+                return 1
 
-            if text1[m - 1] == text2[n - 1]:
-                t[m][n] = 1 + LCS(m - 1, n - 1)
+            if t[first][last] != -1:
+                return t[first][last]
+
+            if s[first] == s[last]:
+                t[first][last] = 2 + lps(first + 1, last - 1)
             else:
-                t[m][n] = max(
-                    LCS(m, n - 1),
-                    LCS(m - 1, n)
+                t[first][last] = max(
+                    lps(first + 1, last),
+                    lps(first, last - 1)
                 )
 
-            return t[m][n]
+            return t[first][last]
 
-        return LCS(m, n)
+        return lps(first, last)
