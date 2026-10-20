@@ -1,20 +1,14 @@
 
-from collections import Counter
-
 class Solution(object):
     def groupAnagrams(self, strs):
-        result = []
-        groups = {}
+        result = {}
 
         for ch in strs:
-            key = tuple(sorted(Counter(ch).items()))
+            key = tuple(sorted(ch))
 
-            if key in groups:
-                result[groups[key]].append(ch)
-            else:
-                groups[key] = len(result)
-                result.append([ch])
+            if key not in result:
+                result[key] = []
 
-        return result
+            result[key].append(ch)
 
-
+        return list(result.values())
