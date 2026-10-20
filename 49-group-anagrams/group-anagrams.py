@@ -4,7 +4,7 @@ class Solution(object):
         result = {}
 
         for ch in strs:
-            key = tuple(sorted(ch))
+            key = "".join(sorted(ch))
 
             if key not in result:
                 result[key] = []
@@ -12,3 +12,5 @@ class Solution(object):
             result[key].append(ch)
 
         return list(result.values())
+
+
