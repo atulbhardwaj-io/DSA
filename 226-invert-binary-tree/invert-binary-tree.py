@@ -6,16 +6,26 @@
 #         self.right = right
 class Solution(object):
     def invertTree(self, root):
+        """
+        :type root: Optional[TreeNode]
+        :rtype: Optional[TreeNode]
+        """
+
         if root is None:
             return None
 
-        # Swap left and right child
-        root.left, root.right = root.right, root.left
+        result = []
 
-        # Invert left subtree
-        self.invertTree(root.left)
+        que = deque([root])
 
-        # Invert right subtree
-        self.invertTree(root.right)
+        while(que):
+            node = que.popleft()
+            node.left, node.right = node.right, node.left
+
+            if node.left:
+                que.append(node.left)
+
+            if node.right:
+                que.append(node.right)
 
         return root
