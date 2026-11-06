@@ -4,31 +4,25 @@
 #         self.val = val
 #         self.left = left
 #         self.right = right
-class Solution(object):
+class Solution:
     def levelOrder(self, root):
-        result = []
-        final = []
-        que = deque([[root, 0]])
-        visit = []
-
         if root is None:
             return []
 
-        while que:
-            node = que.popleft()
+        result = []
+        queue = deque([(root, 0)])
 
-            if node[1] not in visit:
-                visit.append(node[1])
-                result.append(node)
-                final.append([node[0].val])
+        while queue:
+            node, level = queue.popleft()
 
-            else:
-                final[node[1]].append(node[0].val)
+            if level == len(result):
+                result.append([])
 
-            if node[0].left:
-                que.append([node[0].left, node[1] + 1])
+            result[level].append(node.val)
 
-            if node[0].right:
-                que.append([node[0].right, node[1] + 1])
+            if node.left:
+                queue.append((node.left, level + 1))
+            if node.right:
+                queue.append((node.right, level + 1))
 
-        return final
+        return result
