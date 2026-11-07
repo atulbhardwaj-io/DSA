@@ -8,16 +8,17 @@ class Node(object):
 
 class Solution(object):
     def preorder(self, root):
+        if root is None:
+            return []
+
         result = []
+        stack = [root]
 
-        def traverse(node):
-            if node is None:
-                return
+        while stack:
+            node = stack.pop()
+            result.append(node.val)
 
-            result.append(node.val)  # Root
+            for child in reversed(node.children):
+                stack.append(child)
 
-            for child in node.children:
-                traverse(child)      # Children
-
-        traverse(root)
         return result
